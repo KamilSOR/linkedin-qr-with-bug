@@ -14,13 +14,14 @@ def create_linkedin_qr(linkedin_url, output_file):
     qr_image = qr.make_image(fill_color="black", back_color="white")
     qr_image = qr_image.convert("RGBA")
 
-    image_path = "magnifying_glass.png"  # C:\Users\User\linkedin-qr-with-bug
+    image_path = "magnifying_glass.png"  # Ścieżka do pliku z obrazkiem lupy
     magnifying_glass = Image.open(image_path)
     magnifying_glass = magnifying_glass.resize((100, 100), Image.ANTIALIAS)
 
     qr_width, qr_height = qr_image.size
     mg_width, mg_height = magnifying_glass.size
-    qr_image.paste(magnifying_glass, (int((qr_width - mg_width) / 2), int((qr_height - mg_height) / 2)), mask=magnifying_glass)
+    magnifying_glass_gray = magnifying_glass.convert("L")
+    qr_image.paste(magnifying_glass, (int((qr_width - mg_width) / 2), int((qr_height - mg_height) / 2)), mask=magnifying_glass_gray)
 
     qr_image.save(output_file)
 
